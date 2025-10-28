@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import router from './router';
-
 import { IonicVue } from '@ionic/vue';
+
+/* 🔹 Axios toevoegen volgens de Odisee cursus */
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -34,10 +37,16 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* 🔹 App configuratie */
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(VueAxios, axios); // axios integreren in de app
 
+/* 🔹 Maak axios ook beschikbaar via inject() */
+app.provide('axios', app.config.globalProperties.axios);
+
+/* 🔹 Start de app zodra de router klaar is */
 router.isReady().then(() => {
   app.mount('#app');
 });
